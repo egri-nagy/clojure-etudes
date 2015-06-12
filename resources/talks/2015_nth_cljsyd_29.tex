@@ -1,0 +1,142 @@
+\documentclass{beamer}
+
+\usepackage{minted}
+
+\begin{document}
+
+\title[prime-sieves]{Exercises in Style: Sieving the Primes}
+\author[e-n@]{Attila Egri-Nagy}
+\institute[CRM UWS]{Centre for Research and Mathematics\\School of Computing, Engineering and Mathematics\\ University of Western Sydney}
+\date[(nth clj-syd 29)]{clj-syd - The Sydney Clojure User Group, April 29, 2015}
+
+\maketitle
+
+\begin{frame}\frametitle{knowing the primes}
+\begin{center}
+\includegraphics[height=\textheight]{CubeMovie.jpg}
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Eratosthenes Sieve}
+draw!
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{from clojuredocs with a bit of destructuring}
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+%bgcolor=LightGray,
+fontsize=\small,
+linenos
+]{clojure}
+(defn lazy-trialdivision
+  ([] (lazy-trialdivision (iterate inc 2)))
+  ([[prime & nums]]
+    (cons prime
+          (lazy-seq
+              (lazy-trialdivision (filter
+                                     #(not= 0 (mod % prime))
+                                     nums))))))
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{java interop -- imperative style}
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+%bgcolor=LightGray,
+fontsize=\small,
+linenos
+]{clojure}
+(defn java-sieve [n]
+  "returns a BitSet with bits set for each prime up to n"
+  (let [bs (java.util.BitSet. n)]
+    (.flip bs 2 n)
+    (doseq [p (range 2 (Math/sqrt n))]
+      (if (.get bs p)
+        (doseq [q (range (* p p) n p)] (.clear bs q))))
+    bs))
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{wheel factorization}
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+%bgcolor=LightGray,
+fontsize=\small,
+linenos
+]{clojure}
+(def wheel-sieve
+  (concat
+   [2 3 5 7]
+   (lazy-seq
+    (let [primes-from
+          (fn primes-from [n [f & r]]
+            (if (some #(zero? (rem n %))
+                      (take-while #(<= (* % %) n) wheel-sieve))
+              (recur (+ n f) r)
+              (lazy-seq (cons n (primes-from (+ n f) r)))))
+          wheel (cycle [2 4 2 4 6 2 6 4 2 4 6 6 2 6  4  2
+                        6 4 6 8 4 2 4 2 4 8 6 4 6 2  4  6
+                        2 6 6 4 2 4 6 2 6 4 2 4 2 10 2 10])]
+      (primes-from 11 wheel)))))
+\end{minted}
+\end{frame}
+
+
+\begin{frame}\frametitle{The algorithm inside out}
+draw!
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Genuinely lazy Eratosthenes sieve}
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+%bgcolor=LightGray,
+fontsize=\small,
+linenos
+]{clojure}
+(defn lazy-eratosthenes "genuinely lazy Eratosthenes sieve"
+  []
+  (let [reinsert (fn [table composite factor]
+                   (update-in table
+                              [(+ factor composite)]
+                              conj factor))]
+    (defn primes-step [table d]
+      (if-let [factors (get table d)]
+        (recur (reduce #(reinsert %1 d %2)
+                       (dissoc table d) factors)
+               (inc d))
+        (lazy-seq (cons d (primes-step (assoc table
+                                         (* d d)
+                                         (list d))
+                                       (inc d))))))
+    (primes-step {} 2)))
+\end{minted}
+\end{frame}
+
+\begin{frame}\frametitle{Thank You!}
+\begin{center}
+\huge
+\url{https://github.com/egri-nagy/etudes}
+
+\url{www.egri-nagy.hu}
+
+\url{replforce.wordpress.com}
+
+\end{center}
+\end{frame}
+
+
+\end{document}

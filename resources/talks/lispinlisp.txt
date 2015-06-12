@@ -1,0 +1,83 @@
+;; The Lisp defined in McCarthy's 1960 paper, taken from the CL translation by
+;; Paul Graham, and modernized/clojurized for general audience.
+;; Assumes only quote, atom, =, cons, first, rest, cond.
+;; Changing terminology:
+;; car -> first
+;; cdr -> rest
+;; eq -> =
+;; null -> nil?
+;; defun -> defn
+;; *. -> *
+;; t -> T
+;; caar -> ff
+;; cadr -> fr -> 2nd
+;; caddr -> frr -> 3rd
+;; cadar -> frf
+;; caddar -> frrf
+;; evcon -> evcond
+;; evlis -> evlist
+;; assoc -> lookup
+
+;; empty list considered as nil and false as well
+(defn nil? (x)
+  (= x '()))
+
+(defn and (x y)
+  (cond x  (cond y  'T
+                 'T '())
+        'T '()))
+
+(defn not (x)
+  (cond x  '()
+        'T 'T))
+
+(defn append (x y)
+  (cond (nil? x) y
+        'T       (cons (first x) (append (rest x) y))))
+
+(defn list (x y)
+  (cons x (cons y '())))
+
+;; x,y lists
+(defn pair (x y)
+  (cond (and (nil? x) (nil? y)) '()
+        (and (not (atom x)) (not (atom y))
+         (cons (list (first x) (first y))
+               (pair (rest x) (rest y))))))
+
+;; x atom, y list of pairs, table lookup
+(defn lookup (x y)
+  (cond (= (ff y) x) (frf y)
+        'T (lookup x (rest y))))
+
+;;e expression, a environment as pairs
+(defn eval (e a)
+  (cond
+    (atom e) (lookup e a)
+    (atom (first e))
+     (cond
+       (= (first e) 'quote) (2nd e)
+       (= (first e) 'atom)  (atom (eval (2nd e) a))
+       (= (first e) '=)     (= (eval (2nd e) a)
+                               (eval (3rd e) a))
+       (= (first e) 'first)   (first (eval (2nd e) a))
+       (= (first e) 'rest)   (rest (eval (2nd e) a))
+       (= (first e) 'cons)  (cons (eval (2nd e) a)
+                                  (eval (3rd e) a))
+       (= (first e) 'cond)  (evcond (rest e) a)
+       ('T (eval (cons (lookup (first e) a)
+                        (rest e)) a)))
+
+     (= (ff e) 'label) (eval (cons (frrf e) (rest e))
+                             (cons (list (frf e) (first e)) a))
+     (= (ff e) 'lambda) (eval (frrf e)
+                              (append (pair (frf e) (evlist (rest e) a)) a))))
+
+(defn evcond (c a)
+  (cond (eval (first c) a) (eval (2nd c) a)
+        'T (evcond (rest (rest c)) a)))
+
+(defn evlist (m a)
+  (cond (nil? m) '()
+        'T (cons (eval  (first m) a)
+                 (evlist (rest m) a))))

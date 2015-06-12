@@ -1,0 +1,7 @@
+Programming - Past & Future
+
+Part 1 - The Past: LISP.
+
+Retracing the path of computer pioneers from the late '50s, we will define a programming language using a few primitives. As an application, we will implement this language in itself. Yes, the talk will be full of recursions.
+
+Part 2 - The most bodacious language, only for the brave and true: Clojure.
