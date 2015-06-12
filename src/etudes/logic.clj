@@ -3,6 +3,10 @@
   (:require [clojure.core.logic :as l]
             [clojure.core.logic.fd :as fd]))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;PROBLEM: construct permutations of n points
+;;IDEA: we need all vectors of size n with no duplications
+
 ;;it is easy to do permutations of fixed size
 (defn permutations3points []
   (l/run* [q]
