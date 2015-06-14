@@ -4,7 +4,7 @@
 (defn permutations
   [coll]
   (letfn [(fix-one-permute-rest [x]
-             (map #(cons x %)
+             (map (partial cons x)
                   (permutations (remove #(= x %) coll))))]
     (if (= 1 (count coll))
       [coll]
