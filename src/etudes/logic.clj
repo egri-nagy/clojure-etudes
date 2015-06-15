@@ -3,6 +3,23 @@
   (:require [clojure.core.logic :as l]
             [clojure.core.logic.fd :as fd]))
 
+;;illustrating conde as an OR operation vs. the AND by simple enumeration
+(l/run* [q]
+  (l/fresh [x y z]
+    (l/conde
+     ((l/== x 1))
+     ((l/== y 2))
+     ((l/== z 3)))
+    (l/== q [x y z])))
+
+(l/run* [q]
+  (l/fresh [x y z]
+    (l/== x 1)
+    (l/== y 2)
+    (l/== z 3)
+    (l/== q [x y z])))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;PROBLEM: construct permutations of n points
 ;;IDEA: we need all vectors of size n with no duplications
