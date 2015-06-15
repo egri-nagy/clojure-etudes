@@ -58,3 +58,10 @@
       (l/everyg #(fd/in % points) p)
       (fd/distinct p)
       (l/== q p))))
+
+(defn bitstrings [n]
+  (let [p (vec (repeatedly n l/lvar))
+        bits  (fd/domain 0 1)]
+    (l/run* [q]
+      (l/everyg #(fd/in % bits) p)
+      (l/== q p))))
