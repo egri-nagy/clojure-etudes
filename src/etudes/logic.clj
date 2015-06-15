@@ -74,5 +74,6 @@
     (l/appendo a b y)
     (l/appendo x c b)))
 
-(l/run* [q]
-  (sublisto q [1 2 3 4 5]))
+(defn sublists [l]
+  (set (l/run* [q]
+         (sublisto q l))))
