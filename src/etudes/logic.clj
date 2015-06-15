@@ -65,3 +65,14 @@
     (l/run* [q]
       (l/everyg #(fd/in % bits) p)
       (l/== q p))))
+
+;;from http://objectcommando.com/blog/2011/10/13/appendo-the-great/
+(defn sublisto
+  "The list x (in sequence) appears in y"
+  [x y]
+  (l/fresh [a b c]
+    (l/appendo a b y)
+    (l/appendo x c b)))
+
+(l/run* [q]
+  (sublisto q [1 2 3 4 5]))
