@@ -3,6 +3,24 @@
   (:require [clojure.core.logic :as l]
             [clojure.core.logic.fd :as fd]))
 
+;; unconditional success
+(l/run* [q]
+  l/succeed)
+
+(l/run* [q]
+  (l/== q q))
+
+;; impossible
+(l/run* [q]
+  l/fail)
+
+(l/run* [q]
+  (l/!= q q))
+
+(l/run* [q]
+  (l/== q 1)
+  (l/== q 2))
+
 ;;illustrating conde as an OR operation vs. the AND by simple enumeration
 (l/run* [q]
   (l/fresh [x y z]
