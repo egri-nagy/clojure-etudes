@@ -59,6 +59,8 @@
       (fd/distinct p)
       (l/== q p))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;PROBLEM: find all bitstrings of length n
 (defn bitstrings [n]
   (let [p (vec (repeatedly n l/lvar))
         bits  (fd/domain 0 1)]
@@ -66,6 +68,8 @@
       (l/everyg #(fd/in % bits) p)
       (l/== q p))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;PROBLEM: find all subseqs of a seq
 ;;from http://objectcommando.com/blog/2011/10/13/appendo-the-great/
 (defn sublisto
   "The list x (in sequence) appears in y"
@@ -77,3 +81,11 @@
 (defn sublists [l]
   (set (l/run* [q]
          (sublisto q l))))
+
+;;plain functional style
+(defn sublists2 [l]
+  (if (empty? l)
+    [()]
+    (concat
+     (for [i (range 1 (inc (count l)))] (take i l))
+     (sublists2 (rest l)))))
