@@ -3,6 +3,8 @@
   (:require [clojure.core.logic :as l]
             [clojure.core.logic.fd :as fd]))
 
+;; RS Reasoned Schemer
+
 ;; unconditional success
 (l/run* [q]
   l/succeed)
@@ -89,3 +91,14 @@
     (concat
      (for [i (range 1 (inc (count l)))] (take i l))
      (sublists2 (rest l)))))
+
+;;RS 2/29
+(l/run* [q]
+  (l/fresh [d x y w s]
+    (l/conso w [\a \n \s] s)
+    (l/resto q s)
+    (l/firsto q x)
+    (l/== \b x)
+    (l/resto q d)
+    (l/firsto d y)
+    (l/== \e y)))
