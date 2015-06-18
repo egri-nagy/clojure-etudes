@@ -102,3 +102,13 @@
     (l/resto q d)
     (l/firsto d y)
     (l/== \e y)))
+
+;; RS 3/31
+(defn twinso
+  [l]
+  (l/fresh [x y]
+    (l/conso x y l)
+    (l/conso x [] y)))
+
+(l/run* [q]
+  (twinso [q "tofu"]))
