@@ -83,6 +83,10 @@
     (l/appendo a b y)
     (l/appendo x c b)))
 
+;;just getting 7, also demonstrating the redundancy of the solution set
+(l/run 7 [q]
+  (sublisto q [1 :a 42 "foo"]))
+
 (defn sublists [l]
   (set (l/run* [q]
          (sublisto q l))))
