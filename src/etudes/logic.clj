@@ -5,6 +5,10 @@
 
 ;; RS Reasoned Schemer
 
+
+(l/run* [q]
+  (l/== q 2))
+
 ;; unconditional success
 (l/run* [q]
   l/succeed)
