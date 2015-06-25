@@ -112,3 +112,8 @@
 
 (l/run* [q]
   (twinso [q "tofu"]))
+
+;;without twinso
+(l/run* [q]
+  (l/fresh [x]
+    (l/== q [x x])))
