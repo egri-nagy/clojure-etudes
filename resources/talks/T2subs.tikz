@@ -1,0 +1,42 @@
+\begin{tikzpicture}
+[align=center,node distance=2.2cm]
+\tikzstyle{plain}=[fill=white,rounded corners=3pt, draw]
+
+
+\draw node [plain] (1234) {[11],[12],[21],[22]};
+\draw node [plain,below left of=1234] (124) {[11],[12],[22]};
+\draw node [plain,below of=124] (24) {[12],[22]};
+\draw node [plain,left of=24] (14) {[11],[22]};
+\draw node [plain,right of=24] (12) {[11],[12]};
+\draw node [plain,right of=12] (23) {[12],[21]};
+
+\draw node [plain,below of=24] (1) {[11]};
+\draw node [plain,left of=1] (4) {[22]};
+\draw node [plain,right of=1] (2) {[12]};
+\draw node [plain,below of=1] (empty) {$\varnothing$};
+
+
+\draw  (1234) -- (124);
+\draw (124) -- (12);
+\draw (124) -- (24);
+\draw (124) -- (14);
+\draw  (1234) -- (23);
+\path (23) edge (2);
+\draw (1) -- (empty);
+\draw (2) -- (empty);
+\draw (4) -- (empty);
+\draw (14) -- (4);
+\draw (14) -- (1);
+\draw (12) -- (2);
+\draw (12) -- (1);
+\draw (24) -- (4);
+\draw (24) -- (2);
+\begin{pgfonlayer}{background layer}
+\filldraw [gray9] plot [smooth cycle] coordinates {(1.6,-4.4)(-2.6,-4.4) (-2.4,-3.2) (1.6,-3.3)};
+\filldraw [gray6] plot [smooth cycle] coordinates {(1.5,-4.3)(-2.5,-4.2) (-2.3,-3.3) (1.5,-3.4)};
+\filldraw [gray9] plot [smooth cycle] coordinates {(-4,-5.2) (2,-5.5) (1,-6.5)(-4.5,-6.6)};
+\filldraw [gray6] plot [smooth cycle] coordinates {(-4,-5.5) (-1.2,-5.6) (-1.2,-6.3)(-4,-6.4)};
+
+\end{pgfonlayer}
+
+\end{tikzpicture}
