@@ -11,3 +11,13 @@
             (recur nums (assoc vnums i (+ m (get nums i))))))))
 
 (lcm 2/3 5/7)
+
+;;another one
+(defn lcm2 [& x]
+  (first(first
+         (filter (fn [z] (apply = z))
+                 (iterate (fn [l]
+                            (let [m (apply min l)
+                                  diff (map #(if (= m %) %2 0) l x)]
+                              (map + l diff)))
+                          x)))))
