@@ -8,3 +8,5 @@
          (towers-of-hanoi (dec numofdisks) from via to)
          (println (format "%s to %s" from to))
          (recur (dec numofdisks) via to from)))))
+
+(towers-of-hanoi 3)
