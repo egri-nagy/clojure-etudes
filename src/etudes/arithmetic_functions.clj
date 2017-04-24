@@ -17,3 +17,14 @@
   (/ cf (* 2 3.141592)))
 
 (def checker (comp radius-from-circumference circle-circumference))
+
+;;the sum of the first n integers
+(defn sum-of-ints
+  "The clever way."
+  [n]
+  (/ (* n (inc n)) 2))
+
+(defn sum-of-ints-brute-force
+  "The wasteful computation."
+  [n]
+  (apply + (range 1 (inc n))))
