@@ -5,6 +5,7 @@
   [l]
   (= l (reverse l)))
 
+;; in a sense this does exactly what = and reverse would do
 (defn palindrome?2
   "Decides whether a sequence is palindrome or not,
   without using reverse."
