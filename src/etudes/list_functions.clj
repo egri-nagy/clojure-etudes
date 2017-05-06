@@ -11,3 +11,10 @@
   (if (zero? n)
     (first l)
     (element-at (rest l) (dec n))))
+
+(defn MAP
+  [f coll]
+  (if (empty? coll)
+    ()
+    (cons (f (first coll))
+          (MAP f (rest coll)))))
