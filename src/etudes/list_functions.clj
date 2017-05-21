@@ -30,3 +30,11 @@
     ()
     (cons (f (first coll))
           (MAP f (rest coll)))))
+
+(defn FILTER
+  [pred coll]
+  (if (empty? coll)
+    ()
+    (if (pred (first coll))
+      (cons (first coll) (FILTER pred (rest coll)))
+      (FILTER pred (rest coll)))))
