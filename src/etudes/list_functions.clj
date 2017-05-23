@@ -46,3 +46,10 @@
   (reduce (fn [x y] (conj x (f y)))
           []
           coll))
+
+(defn FILTER2
+  "implementing filter by reduce"
+  [pred coll]
+  (reduce (fn [acc x] (if (pred x) (conj acc x) acc))
+          []
+          coll))
