@@ -25,6 +25,7 @@
     (element-at (rest l) (dec n))))
 
 (defn MAP
+  "recursive implementation of map"
   [f coll]
   (if (empty? coll)
     ()
@@ -38,3 +39,10 @@
     (if (pred (first coll))
       (cons (first coll) (FILTER pred (rest coll)))
       (FILTER pred (rest coll)))))
+
+(defn MAP2
+  "implementing map by reduce"
+  [f coll]
+  (reduce (fn [x y] (conj x (f y)))
+          []
+          coll))
