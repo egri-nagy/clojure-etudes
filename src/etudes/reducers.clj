@@ -1,12 +1,13 @@
 (ns etudes.reducers
-  (:require [clojure.core.reducers :as r]))
+  (:require [clojure.core.reducers :as r]
+            [criterium.core :as c]))
 
-(def v (into [] (range 2000000)))
+(def v (into [] (range 200000)))
 
-(time (reduce + (map inc (filter even? v))))y
+(c/quick-bench (reduce + (map inc (filter even? v))))
 
-(time (reduce + (r/map inc (r/filter even? v))))
+(c/quick-bench (reduce + (r/map inc (r/filter even? v))))
 
-(time (r/fold + (r/map inc (r/filter even? v))))
+(c/quick-bench (r/fold + (r/map inc (r/filter even? v))))
 
 

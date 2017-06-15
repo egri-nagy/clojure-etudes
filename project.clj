@@ -1,7 +1,8 @@
 (defproject etudes "0.1"
   :description "coding exercises in Clojure"
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/core.logic "0.8.11"]]
+                 [org.clojure/core.logic "0.8.11"]
+                 [criterium "0.4.4"]]
   :plugins [[lein-kibit "0.1.2"]
             [lein-ancient "0.6.10"]
             [lein-bikeshed "0.3.0"]
