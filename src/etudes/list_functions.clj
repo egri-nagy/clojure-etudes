@@ -53,3 +53,9 @@
   (reduce (fn [acc x] (if (pred x) (conj acc x) acc))
           []
           coll))
+
+(defn REDUCE
+  [rf acc coll]
+  (if (empty? coll)
+    acc
+    (recur rf (rf acc (first coll)) (rest coll))))
