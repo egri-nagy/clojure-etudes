@@ -1,8 +1,9 @@
 (ns etudes.reducers
   (:require [clojure.core.reducers :as r]
+            [tesser.core :as t]
             [criterium.core :as c]))
 
-(def v (into [] (range 200000 205000)))
+(def v (into [] (range 200000 204000)))
 
 (defn factors [n]
   (into []
@@ -14,6 +15,29 @@
 (defn MAX
   ([] 0)
   ([m x] (max m x)))
+
+
+(println)
+(println "futures and derefs")
+
+(c/bench (let [f1 (future (reduce MAX (map count (map factors (filter even? (range 200000 201000))))))
+               f2 (future (reduce MAX (map count (map factors (filter even? (range 201000 202000))))))
+               f3 (future (reduce MAX (map count (map factors (filter even? (range 202000 203000))))))
+               f4 (future (reduce MAX (map count (map factors (filter even? (range 203000 204000))))))]
+           (reduce MAX 0 [@f1 @f2 @f3 @f4])))
+
+(println)
+(println "tesser")
+
+;(c/bench (t/tesser (t/chunk 1024 v) (t/reduce MAX (t/map count (t/map factors (t/filter even? v))))))
+
+(c/bench
+ (->> (t/filter even?)
+      (t/map factors)
+      (t/map count)
+      (t/fold MAX)
+      (t/tesser (t/chunk 1024 v))))
+
 
 (println)
 (println "vanilla")
