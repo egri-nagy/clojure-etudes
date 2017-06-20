@@ -10,6 +10,9 @@
         n (count nums)]
     (/ sum n)))
 
+(def mean2 (comp (partial apply /)
+                 (juxt (partial apply +) count)))
+
 (defn median
   [nums]
   (let [ordered (vec (sort nums))
