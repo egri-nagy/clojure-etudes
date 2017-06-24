@@ -11,7 +11,7 @@
 (defn totex [s]
   (let [s2 (->> (string/split s #"\n")
                      (map string/trim)
-                     (remove #(= (first %) \#))
+                     (remove #(string/starts-with? % "#'"))
                      (map f)
                      (remove empty?)
                      (map string/trim)
