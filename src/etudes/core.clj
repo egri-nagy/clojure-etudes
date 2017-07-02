@@ -1,4 +1,5 @@
 (ns etudes.core
+  (:require [etudes.latex-converter :as latex])
   (:gen-class))
 
 (defn -main
