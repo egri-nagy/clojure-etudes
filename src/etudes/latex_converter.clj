@@ -21,5 +21,6 @@
                 (map #(str % \newline)))]
     (apply str (cons "\\begin{CODE}\n" (take (dec (count s3)) s3)))))
 
-(println (totex (slurp "resources/x")))
-(println)
+
+(defn do-totex [file]
+  (println (totex (slurp file))))
