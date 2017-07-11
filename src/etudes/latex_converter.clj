@@ -3,10 +3,16 @@
 
 (def prompt "etudes.core>")
 
+(defn verbatim [s]
+  (-> s
+      (string/replace "\\" "\\char`\\\\")
+      (string/replace "{" "\\{")
+      (string/replace "}" "\\}")))
+
 (defn f [s]
   (if (string/starts-with? s prompt)
     (string/replace s prompt "")
-    (str "\\end{CODE}\n\\solution{" s "}\n\\begin{CODE}\n")))
+    (str "\\end{CODE}\n\\solution{" (verbatim s) "}\n\\begin{CODE}\n")))
 
 (defn totex [s]
   (let [s2 (->> (string/split s #"\n")
