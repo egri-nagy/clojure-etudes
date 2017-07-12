@@ -1,3 +1,5 @@
+(ns etudes.prime-sieves)
+
 ;; rewriting https://clojuredocs.org/clojure.core/lazy-seq#example-542692d3c026201cdc326ff1
 ;; Q: why the stack overflow?
 (defn lazy-trialdivision
@@ -57,3 +59,12 @@
                                          (list d)) ;prime is the only factor now
                                        (inc d))))))
     (primes-step {} 2)))
+
+;;using reduce
+(defn primes-up-to [n]
+  (reduce (fn [primes x]
+            (if (some zero? (map (fn [y] (mod x y)) primes))
+              primes
+              (conj primes x)))
+          [2]
+          (range 3 n)))
