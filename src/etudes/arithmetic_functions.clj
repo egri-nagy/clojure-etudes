@@ -28,3 +28,10 @@
   "The wasteful computation."
   [n]
   (apply + (range 1 (inc n))))
+
+
+(defn abs [x]
+  (if (>= x 0) x (- x)))
+
+(defn abs2 [x]
+  (max (- x) x))

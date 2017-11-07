@@ -1,4 +1,5 @@
-(ns etudes.expt)
+(ns etudes.expt
+  (:require [clojure.spec.alpha :as s]))
 
 ;; exponentiation in logarithmic number of steps, the actual number depends on
 ;; the number of ones in the binary representation of n (from SICP)
