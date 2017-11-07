@@ -1,9 +1,3 @@
-(ns etudes.statistics)
-
-(defn range
-  [nums]
-  (- (apply max nums) (apply min nums)))
-
 (defn mean
   [nums]
   (let [sum (apply + nums)
