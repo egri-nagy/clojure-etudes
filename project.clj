@@ -1,6 +1,6 @@
 (defproject etudes "0.1"
   :description "coding exercises in Clojure"
-  :dependencies [[org.clojure/clojure "1.9.0-beta2"]
+  :dependencies [[org.clojure/clojure "1.9.0-RC1"]
                  [org.clojure/core.logic "0.8.11"]
                  [tesser.core "1.0.2"]
                  [criterium "0.4.4"]]
