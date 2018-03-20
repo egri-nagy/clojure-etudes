@@ -3,6 +3,7 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/core.logic "0.8.11"]
                  [org.clojure/core.match "0.3.0-alpha5"]
+                 [quil "2.6.0"]
                  [tesser.core "1.0.2"]
                  [criterium "0.4.4"]]
   :plugins [[lein-kibit "0.1.2"]
