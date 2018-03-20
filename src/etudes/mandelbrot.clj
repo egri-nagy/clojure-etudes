@@ -58,9 +58,9 @@
 (defn draw []
   (q/no-loop))
 
-(q/defsketch example                  ;; Define a new sketch named example
+(q/defsketch example
   :title "Mandelbrot Set"
   :settings #(q/smooth 0)
-  :setup setup                        ;; Specify the setup fn
-  :draw draw                          ;; Specify the draw fn
+  :setup setup
+  :draw draw
   :size [900 600])        
