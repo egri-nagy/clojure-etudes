@@ -45,15 +45,16 @@
           x (range xres)
           :when (not (escape? (->ComplexNumber (+ lx (* x xdiff))
                                                (+ ly (* y ydiff)))
-                              100))]
+                              200))]
       [x y])))
 
 ;;Quil sketch part
 (defn setup []
   (q/background (q/color 255 255 255 0))
   (q/stroke (q/color 0 0 0 0))
-  (doseq [[x y]  (mandelbrot-set-view -2.1 -1.1 1.1 1.1 (q/width) (q/height))] 
-    (q/point x y)))
+  (doseq [[x y]  (mandelbrot-set-view -1.07341 -0.230675 -0.883232 -0.366524 (q/width) (q/height))] 
+    (q/point x y))
+  (q/save "mandelbrot.png"))
   
 (defn draw []
   (q/no-loop))
@@ -63,4 +64,4 @@
   :settings #(q/smooth 0)
   :setup setup
   :draw draw
-  :size [900 600])        
+  :size [1024 820])        
