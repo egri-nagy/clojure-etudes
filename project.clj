@@ -3,13 +3,15 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/core.logic "0.8.11"]
                  [org.clojure/core.match "0.3.0-alpha5"]
-                 [quil "2.6.0"]
+                 [quil "2.7.1"]
                  [tesser.core "1.0.2"]
-                 [criterium "0.4.4"]]
+                 [criterium "0.4.4"]
+                 [com.bhauman/rebel-readline "0.1.3"]]
   :plugins [[lein-kibit "0.1.2"]
             [lein-ancient "0.6.14"]
             [lein-bikeshed "0.3.0"]
             [jonase/eastwood "0.2.3"]]
   :main ^:skip-aot etudes.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}}
+  :aliases {"rebl" ["trampoline" "run" "-m" "rebel-readline.main"]})
