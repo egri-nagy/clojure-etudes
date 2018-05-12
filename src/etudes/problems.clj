@@ -54,23 +54,53 @@
 ;;     "one million four hundred and fifty-six dollars and thirteen cents"
 
 (defn sanitize
-  "Removes invalid characters."
+  "Removes invalid characters from a string representation of a floating point
+  number."
   [s]
   (apply str (filter (set "0123456789.") s)))
 
-(defn posint2digit->english
+(defn posint->english
+  "English writing of positive integers up to millions."
   [n]
-  (let [smallnums {0 "zero" 1 "one" 2 "two" 3 "three" 4 "four" 5 "five" 6 "six"
+  (let [;a map from the digits and the still irregular teens to words
+        smallnums {0 "zero" 1 "one" 2 "two" 3 "three" 4 "four" 5 "five" 6 "six"
                    7 "seven" 8 "eight" 9 "nine"
-                   ;; numbers between 10 and 20 are still irregular enough
                    10 "ten" 11 "eleven" 12 "twelve" 13 "thirteen" 14 "fourteen"
                    15 "fifteen" 16 "sixteen" 17 "seventeen" 18 "eighteen"
                    19 "nineteen"}
+        ;the are also irregular, so they have a separate map
         tens {2 "twenty" 3 "thirty" 4 "forty" 5 "fifty" 6 "sixty" 7 "seventy"
               8 "eighty" 9 "ninety"}]
-    (if (< n 20)
-      (smallnums n)
-      (str (tens (int (/ n 10))) "-" (smallnums (mod n 10))) )))
+    (cond
+      ;just a lookup
+      (< n 20) (smallnums n)
+      ;up to a hundred we use the dash to connect
+      (< n 100) (str (tens (int (/ n 10)))
+                     "-"
+                     (smallnums (mod n 10)))
+      ;up to a thousand, we still only multiply by 10
+      (< n 1000) (let [rem (mod n 100)
+                       ending (if (zero? rem)
+                                " hundred"
+                                (str " hundred and "
+                                     (posint->english rem)))]
+                   (str (smallnums (int (/ n 100))) ending))
+      ;up to million we jump up by 10^3, so double recursion
+      (< n 1000000) (let [rem (mod n 1000)
+                          ending (cond (zero? rem) " thousand"
+                                       (> rem 100 ) (str " thousand "
+                                                         (posint->english rem))
+                                       :else (str " thousand and "
+                                                  (posint->english rem)))]
+                      (str (posint->english (int (/ n 1000))) ending))
+      ;exactly the same pattern, abstraction to be made when going to billion
+      :else (let [rem (mod n 1000000)
+                  ending (cond (zero? rem) " million"
+                               (> rem 100) (str " million "
+                                                (posint->english rem))
+                               :else (str " million and "
+                                          (posint->english rem)))]
+              (str (posint->english (int (/ n 1000000))) ending)))))
 
 (defn dollars
   [s])
