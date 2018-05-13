@@ -85,7 +85,7 @@
   [s]
   (let [; bisecting the string about the possibly non-existent .
         ds (apply str (vec (take-while (complement #{\.}) s)))
-        cs  (apply str (vec (rest (drop-while (complement #{\.}) s))))
+        cs  (apply str (vec (take 2 (rest (drop-while (complement #{\.}) s)))))
         ; correcting cents, e.g. .1 should produce 10 cents
         ccs (apply str cs (repeat (- 2 (count cs)) \0))
         ; ds might be empty (unlike corrected ccs)
