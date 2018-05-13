@@ -1,4 +1,5 @@
-(ns etudes.dollars)
+(ns etudes.dollars
+  (:require [clojure.string :as string]))
 
 ;; Write a function (dollars) that accepts a `String` and returns a `String`.
 ;; It will accept a numeric value as input, representing an amount of
@@ -81,4 +82,23 @@
               (str (posint->english (int (/ n 1000000))) ending)))))
 
 (defn dollars
-  [s])
+  [s]
+  (let [; bisecting the string about the possibly non-existent .
+        ds (apply str (vec (take-while (complement #{\.}) s)))
+        cs  (apply str (vec (rest (drop-while (complement #{\.}) s))))
+        ; correcting cents, e.g. .1 should produce 10 cents
+        ccs (apply str cs (repeat (- 2 (count cs)) \0))
+        ; ds might be empty (unlike corrected ccs)
+        dn (if (empty? ds)
+             0
+             (read-string ds))
+        cn (read-string ccs)]
+    (str (posint->english dn)
+         (if (= 1 dn)
+           " dollar"
+           " dollars")
+         " and "
+         (posint->english cn)
+         (if (= 1 cn)
+           " cent"
+           " cents"))))
