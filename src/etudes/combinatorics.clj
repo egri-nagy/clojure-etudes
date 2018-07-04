@@ -40,4 +40,3 @@
     (mapcat
      (partial put-in-front (tuples2 (dec n) coll))
      coll)))
-
