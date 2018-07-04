@@ -8,4 +8,4 @@
          (str " " source "->" target " ")
          (towers-of-hanoi (dec numofdisks) spare target source))))
 
-(towers-of-hanoi 2 :t1 :t2 :t3)
+(towers-of-hanoi 4 \1 \2 \3)
