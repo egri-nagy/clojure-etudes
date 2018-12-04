@@ -3,7 +3,7 @@
   :dependencies [[org.clojure/clojure "1.10.0-RC3"]
                  [org.clojure/core.logic "0.8.11"]
                  [org.clojure/core.match "0.3.0-alpha5"]
-                 [quil "2.7.1"]
+                 [quil "2.8.0"]
                  [tesser.core "1.0.3"]
                  [criterium "0.4.4"]
                  [com.bhauman/rebel-readline "0.1.4"]]
