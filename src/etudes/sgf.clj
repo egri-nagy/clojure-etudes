@@ -26,9 +26,19 @@
   (str "\\black{"
        (sgfcoords->igocoords
         (first (re-find #"AB(\[[a-z]*\])*" s)))
-       "}"
-       ))
+       "}"))
 
 (defn extract-white
   [s]
-  (first (re-find #"AB(\[[a-z]*\])*" s)))
+  (str "\\white{"
+       (sgfcoords->igocoords
+        (first (re-find #"AW(\[[a-z]*\])*" s)))
+       "}"))
+
+(defn extract
+  [s]
+  (str (extract-white s)
+       (extract-black s)))
+
+(defn convert [file]
+  (println (extract (slurp file))))
