@@ -20,3 +20,15 @@
   (let [coords (re-seq #"[a-z]+" s)
         converted (map sgfcoord->igocoord coords)]
     (string/join "," converted)))
+
+(defn extract-black
+  [s]
+  (str "\\black{"
+       (sgfcoords->igocoords
+        (first (re-find #"AB(\[[a-z]*\])*" s)))
+       "}"
+       ))
+
+(defn extract-white
+  [s]
+  (first (re-find #"AB(\[[a-z]*\])*" s)))
