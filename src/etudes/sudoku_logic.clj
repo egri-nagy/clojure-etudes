@@ -40,34 +40,30 @@
         cols  (colify rows)
         grids (subgrid rows)]
     (logic/run 1 [q]
-      (init lvars board)                
-      (logic/everyg #(fd/in % legal-nums) lvars)         
+      (init lvars board)
+      (logic/everyg #(fd/in % legal-nums) lvars)
       (logic/everyg fd/distinct rows)
       (logic/everyg fd/distinct cols)
       (logic/everyg fd/distinct grids)
       (logic/== q lvars))))
 
 
-  (def b1 '[3 - - - - 5 - 1 -
-            - 7 - - - 6 - 3 -
-            1 - - - 9 - - - -
-            7 - 8 - - - - 9 -
-            9 - - 4 - 8 - - 2
-            - 6 - - - - 5 - 1
-            - - - - 4 - - - 6
-            - 4 - 7 - - - 2 -
-            - 2 - 6 - - - - 3])
+(def ca '[2 5 8 - 3 - 9 - 1
+          - 1 - - - 4 - - -
+          4 - 7 9 - - 2 - 8
+          3 - 5 2 - - - - -
+          - - - - 9 8 1 3 -
+          - 4 - - - 3 - - -
+          - - - 3 6 - - 7 2
+          5 7 - - - - - - 3
+          9 - 3 - - - 6 - 4])
 
-  
-(-> b1
+(-> ca
     sudoku/prep
     sudoku/print-board)
 
-(-> b1
+(-> ca
     solve-logically
     first
     sudoku/prep
     sudoku/print-board)
-
-
-
