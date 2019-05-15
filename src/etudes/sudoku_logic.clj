@@ -11,6 +11,7 @@
        (map vec)
        vec))
 
+;; transpose
 (defn colify [rows]
   (apply map vector rows))
 
