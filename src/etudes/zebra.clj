@@ -1,8 +1,9 @@
 ;; core.logic solution for the famous Zebra Puzzle https://en.wikipedia.org/wiki/Zebra_Puzzle
 ;; Assignment done by Koichi Yano for MAT245
 (ns etudes.zebra
+  (:gen-class)
   (:refer-clojure :exclude [==])
-  (:require [clojure.core.logic]
+  (:require [clojure.core.logic :refer :all]
             [clojure.core.logic.fd :as fd]))
 
 (defn rule2
