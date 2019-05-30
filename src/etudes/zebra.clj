@@ -1,3 +1,5 @@
+;; core.logic solution for the famous Zebra Puzzle https://en.wikipedia.org/wiki/Zebra_Puzzle
+;; Assignment done by Koichi Yano for MAT245
 (ns etudes.zebra
   (:gen-class)
   (:use clojure.core.logic))
