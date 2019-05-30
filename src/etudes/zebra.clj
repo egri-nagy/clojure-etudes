@@ -1,10 +1,9 @@
 ;; core.logic solution for the famous Zebra Puzzle https://en.wikipedia.org/wiki/Zebra_Puzzle
 ;; Assignment done by Koichi Yano for MAT245
 (ns etudes.zebra
-  (:gen-class)
-  (:use clojure.core.logic))
-
-(require '[clojure.core.logic.fd :as fd])
+  (:refer-clojure :exclude [==])
+  (:require [clojure.core.logic]
+            [clojure.core.logic.fd :as fd]))
 
 (defn rule2
   "The Englishman lives in the red house."
