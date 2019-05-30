@@ -1,4 +1,4 @@
-(ns zebra-problem.core
+(ns etudes.zebra
   (:gen-class)
   (:use clojure.core.logic))
 
