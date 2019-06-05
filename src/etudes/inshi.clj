@@ -10,7 +10,7 @@
           \i \j \h \k \k
           \i \j \h \l \l])
 
-;;factors of values in a same group
+;;result of multiplications of values in a same group
 (def hint {:a 6 :b 4 :c 5 :d 40 :e 3 :f 4 :g 15 :h 40 :i 4 :j 10 :k 6 :l 3})
 
 (def logic-board #(repeatedly 25 lvar))
@@ -24,8 +24,12 @@
 (defn colify [rows]
   (apply map vec rows))
 
-(defn check-factors [board hint]
-  (for [x ()]))
+;; trying to
+(defn check-multiplication [[lvar & lvars] [cell & cells]]
+  (let [lst (distint b1)]
+   ()))
+    
+    
       
   
 
@@ -38,5 +42,6 @@
       (everyg #(fd/in % legal-nums) lvars)
       (everyg fd/distinct rows)
       (everyg fd/distinct cols)
+      
       (== q lvars))))
 
