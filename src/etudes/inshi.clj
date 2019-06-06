@@ -5,6 +5,8 @@
   (:require [clojure.core.logic :refer :all]
             [clojure.core.logic.fd :as fd]))
 
+(def N 5)
+
 (def b1 '[\a \b \b \c \d
           \a \e \e \f \d
           \g \g \h \f \d
@@ -14,11 +16,11 @@
 ;;result of multiplications of values in a same group
 (def hint {:a 6 :b 4 :c 5 :d 40 :e 3 :f 4 :g 15 :h 40 :i 4 :j 10 :k 6 :l 3})
 
-(def logic-board #(repeatedly 25 lvar))
+(def logic-board #(repeatedly (* N N) lvar))
 
 (defn rowify [board]
   (->> board
-       (partition 5)
+       (partition N)
        (map vec)
        vec))
 
@@ -27,11 +29,11 @@
 
 ;; trying to
 (defn check-multiplication [[lvar & lvars] [cell & cells]]
-  (let [lst (distint b1)]
+  (let [lst (fd/distinct b1)]
    ()))
 
 (defn solve [board hint]
-  (let [legal-nums (fd/interval 1 5)
+  (let [legal-nums (fd/interval 1 N)
         lvars logic-board
         rows (rowify lvars)
         cols (colify rows)]
