@@ -1,4 +1,5 @@
-;;core.logic solution for 5*5 Inshi No Heya puzzle https://en.wikipedia.org/wiki/Inshi_no_heya 
+;;core.logic solution for 5*5 Inshi No Heya puzzle https://en.wikipedia.org/wiki/Inshi_no_heya
+;; Assignment done by Koichi Yano for MAT245
 (ns etudes.inshi
   (:refer-clojure :exclude [==])
   (:require [clojure.core.logic :refer :all]
@@ -28,10 +29,6 @@
 (defn check-multiplication [[lvar & lvars] [cell & cells]]
   (let [lst (distint b1)]
    ()))
-    
-    
-      
-  
 
 (defn solve [board hint]
   (let [legal-nums (fd/interval 1 5)
@@ -42,6 +39,5 @@
       (everyg #(fd/in % legal-nums) lvars)
       (everyg fd/distinct rows)
       (everyg fd/distinct cols)
-      
-      (== q lvars))))
 
+      (== q lvars))))
