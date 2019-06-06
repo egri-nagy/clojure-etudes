@@ -7,11 +7,11 @@
 
 (def N 5)
 
-(def b1 '[\a \b \b \c \d
-          \a \e \e \f \d
-          \g \g \h \f \d
-          \i \j \h \k \k
-          \i \j \h \l \l])
+(def b1 '[:a :b :b :c :d
+          :a :e :e :f :d
+          :g :g :h :f :d
+          :i :j :h :k :k
+          :i :j :h :l :l])
 
 ;;result of multiplications of values in a same group
 (def hint {:a 6 :b 4 :c 5 :d 40 :e 3 :f 4 :g 15 :h 40 :i 4 :j 10 :k 6 :l 3})
@@ -25,7 +25,7 @@
        vec))
 
 (defn colify [rows]
-  (apply map vec rows))
+  (apply map vector rows))
 
 ;; trying to
 (defn check-multiplication [[lvar & lvars] [cell & cells]]
