@@ -7,11 +7,11 @@
 
 (def N 5)
 
-(def b1 '[:a :b :b :c :d
-          :a :e :e :f :d
-          :g :g :h :f :d
-          :i :j :h :k :k
-          :i :j :h :l :l])
+(def b1 [:a :b :b :c :d
+         :a :e :e :f :d
+         :g :g :h :f :d
+         :i :j :h :k :k
+         :i :j :h :l :l])
 
 ;;result of multiplications of values in a same group
 (def hint {:a 6 :b 4 :c 5 :d 40 :e 3 :f 4 :g 15 :h 40 :i 4 :j 10 :k 6 :l 3})
@@ -27,6 +27,16 @@
 (defn colify [rows]
   (apply map vector rows))
 
+(defn roomify
+  "This groups the logic variables based on the rooms of the puzzle.
+  How? We interleave the room definition board with the logic variables,
+  form pairs of those, then group by the keyword. Then we clean the resulting
+  by removing keywords."
+  [board lboard]
+  (let [gd  (group-by first (partition 2 (interleave board lboard)))
+        cleaned  (reduce (fn [hm m] (update hm (first m) (partial map second ))) gd gd)]
+    cleaned))
+
 ;; trying to
 (defn check-multiplication [[lvar & lvars] [cell & cells]]
   (let [lst (fd/distinct b1)]
@@ -34,7 +44,7 @@
 
 (defn solve [board hint]
   (let [legal-nums (fd/interval 1 N)
-        lvars logic-board
+        lvars (logic-board)
         rows (rowify lvars)
         cols (colify rows)]
     (run 1 [q]
