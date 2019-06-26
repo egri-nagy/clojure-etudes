@@ -1,6 +1,6 @@
 (defproject etudes "0.1"
   :description "coding exercises in Clojure"
-  :dependencies [[org.clojure/clojure "1.10.0"]
+  :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.logic "0.8.11"]
                  [org.clojure/core.match "0.3.0"]
                  [quil "3.0.0"]
