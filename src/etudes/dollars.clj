@@ -1,5 +1,4 @@
-(ns etudes.dollars
-  (:require [clojure.string :as string]))
+(ns etudes.dollars)
 
 ;; Write a function (dollars) that accepts a `String` and returns a `String`.
 ;; It will accept a numeric value as input, representing an amount of

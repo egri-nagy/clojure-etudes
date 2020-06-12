@@ -11,7 +11,7 @@
         ;merging
         (cond (empty? l1) (into r l2) ;when l1 is exhausted
               (empty? l2) (into r l1) ;when l2 is exhausted
-              :else (if (> 0 (compare (first l1) (first l2))) ;comparison
+              :else (if (neg? (compare (first l1) (first l2))) ;comparison
                       (recur (conj r (first l1)) (rest l1) l2)
                       (recur (conj r (first l2)) l1 (rest l2))))))))
 

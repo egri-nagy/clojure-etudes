@@ -13,7 +13,7 @@
 (defn tuples1
   "Wasteful."
   [n coll]
-  (if (= n 0)
+  (if (zero? n)
     [()]
     (mapcat (fn [x] (map (partial cons x)
                          (tuples1 (dec n) coll)))
@@ -22,7 +22,7 @@
 (defn tuples
   "All n-tuples formed by the elements of a collection."
   [n coll]
-  (if (= n 0)
+  (if (zero? n)
     [()]
     (let [n-1-tuples (tuples (dec n) coll)]
       (mapcat (fn [x] (map (partial cons x)
@@ -35,7 +35,7 @@
 
 (defn tuples2
   [n coll]
-  (if (= n 0)
+  (if (zero? n)
     [()]
     (mapcat
      (partial put-in-front (tuples2 (dec n) coll))
