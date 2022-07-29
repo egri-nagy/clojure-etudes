@@ -7,6 +7,7 @@
                  [tesser.core "1.0.5"]
                  [criterium "0.4.6"]
                  [com.bhauman/rebel-readline "0.1.4"]
+                 [meander/epsilon "0.0.650"]
                  [nrepl "0.9.0"]]
   :plugins [[lein-kibit "0.1.8"]
             [lein-ancient "0.7.0"]
