@@ -4,11 +4,19 @@
   (:require [clojure.core.logic :as logic]
             [clojure.core.logic.fd :as fd]))
 
-(defn rowify [board]
-  (->> board
+(defn rowify
+  "Creating the rows from the single sequence representation of the
+  magic square."
+  [msq]
+  (->> msq
        (partition 3)
        (map vec)
        vec))
+
+(defn colify
+  "Creating the columns based on the rows."
+  [rows]
+  (apply map vector rows))
 
 (defn diagonal1 [rows]
   (for [x [0 1 2]]
@@ -18,17 +26,18 @@
   (for [x [0 1 2]]
     (nth (nth rows x) (- 2 x))))
 
-;; transpose
-(defn colify [rows]
-  (apply map vector rows))
-
-(defn bind [var hint]
+(defn bind-hint
+  "Unify the existing entry (a hint) with the corresponding logic variable.
+  If the entry is empty, then we give succeed, as the constraints are
+  defined elsewhere."
+  [var hint]
   (if (zero? hint)
     logic/succeed
     (logic/== var hint)))
 
-(defn bind-all [vars hints]
-  (logic/and* (map bind vars hints)))
+(defn bind-all-hints
+  [vars hints]
+  (logic/and* (map bind-hint vars hints)))
 
 (defn sumo
   "This goal succeeds if adding up the elements of l is sum."
@@ -40,20 +49,15 @@
       (fd/+ head sum-of-remaining sum)
       (sumo tail sum-of-remaining)])))
 
-(defn solve-logically [board]
+(defn solve-logically [msq]
   (let [legal-nums (fd/interval 1 99)
         lvars (repeatedly 9 logic/lvar)
         rows  (rowify lvars)
-        cols  (colify rows)
-        d1 (diagonal1 rows)
-        d2 (diagonal2 rows)]
+        tuples (concat rows (colify rows) [(diagonal1 rows) (diagonal2 rows)])]
     (logic/run* [q]
-      (bind-all lvars board)
+      (bind-all-hints lvars msq)
       (logic/everyg #(fd/in % legal-nums) lvars)
-      (logic/everyg #(sumo % 99) rows)
-      (logic/everyg #(sumo % 99) cols)
-      (sumo d1 99)
-      (sumo d2 99)
+      (logic/everyg #(sumo % 99) tuples)
       (logic/== q lvars))))
 
 (defn print-magic-square
