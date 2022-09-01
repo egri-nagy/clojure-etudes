@@ -58,7 +58,8 @@
 
 (defn print-magic-square
   [msq]
-  (map println (rowify msq)))
+  (doseq [row (rowify msq)]
+    (println row)))
 
 ;(def sols (solve-logically [0 0 0  0 0 0 0 0 0]))
 
