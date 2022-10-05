@@ -8,5 +8,14 @@
       (= landing 6) 2
       (>= landing 10) :finish
       :else landing)))
-
-(/ (reduce + (map count (take 10000 (repeatedly #(take-while number? (iterate f 1)))))) 10000.0)
+(defn calc
+  [i]
+  (/ (reduce + 
+             (map
+              count
+              (take 1000000
+                    (repeatedly
+                     #(take-while
+                       number?
+                       (iterate f i)))))) 
+     1000000.0))
