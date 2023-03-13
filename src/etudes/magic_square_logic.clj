@@ -65,5 +65,4 @@
   (doseq [row (rowify msq)]
     (println row)))
 
-;(def sols (solve-logically [0 0 0  0 0 0 0 0 0]))
-
+(def sols (solve-logically [0 0 0  0 0 0 0 0 0]))
