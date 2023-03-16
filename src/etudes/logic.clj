@@ -124,3 +124,29 @@
 (l/run* [q]
   (l/fresh [x]
     (l/== q [x x])))
+
+;; reduce as a relation
+
+;; https://www.reddit.com/r/Clojure/comments/5dhw01/corelogic_could_you_code_review_my_reduceo/
+(defn reduceo-plain
+  [relo initial coll result]
+  (l/conde
+   [(l/emptyo coll) (l/== result initial)]
+   [(l/fresh [next-item
+              remaining
+              result-so-far]
+             ;; the next item comes from the collection to be processed 
+             (l/conso next-item remaining coll)
+             ;; the reduction step works
+             (relo initial next-item result-so-far)
+             ;; processing the remaining items will produce the result
+             (reduceo-plain relo result-so-far remaining result))]))
+
+;; https://stackoverflow.com/questions/47185552/why-does-this-implementation-of-sorto-does-not-terminate
+(l/defne reduceo
+  [relo initial coll result]
+  ([_ _ () _] (l/== initial result))
+  ([_ _ [next-item . remaining] _]
+   (l/fresh [result-so-far]
+          (relo initial next-item result-so-far)
+          (reduceo relo result-so-far remaining result))))
