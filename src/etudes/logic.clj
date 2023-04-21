@@ -150,3 +150,11 @@
    (l/fresh [result-so-far]
           (relo initial next-item result-so-far)
           (reduceo relo result-so-far remaining result))))
+
+(l/defne counto
+  [coll n]
+  ([() n] (l/== n 0))
+  ([[_ . r] n] (counto r (dec n))))
+
+(l/run 1 [q]
+  (counto q 22))
