@@ -3,6 +3,7 @@
   :dependencies [[org.clojure/clojure "1.11.3"]
                  [org.clojure/core.logic "1.1.0"]
                  [org.clojure/core.match "1.1.0"]
+                 [org.clojure/math.combinatorics "0.3.0"]
                  [quil "4.3.1563"]
                  [tesser.core "1.0.6"]
                  [criterium "0.4.6"]
