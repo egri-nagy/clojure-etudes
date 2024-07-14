@@ -1,7 +1,8 @@
 (ns etudes.gol
   "Conway's Game of Life, based on Christoph Grand's implementation in
  Clojure Programming, 2012 ISBN: 9781449394707"
-  (:require [clojure.math.combinatorics :as combo]))
+  (:require [clojure.math.combinatorics :as combo]
+            [clojure.string :as string]))
 
 ;; NEIGHBOURS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn neighbours
@@ -73,7 +74,7 @@
   (fn [cells] (conj cells cell)))
 
 (defn erase-cell-fn
-  "Just adding another living cell to the living cells."
+  "Just removing a cell."
   [cell]
   (fn [cells] (disj cells cell)))
 
@@ -100,9 +101,9 @@
                   (when (= bit 1) thing))
                 things bits))))
 
-(defn gol-transformation
-  "creating all transformations"
-  [width height step-fn]
+(defn gol-transformations
+  "creating all transformations (toroidal)"
+  [width height]
   (let [num-of-cells (* width height)
         num-of-states (int (Math/pow 2 num-of-cells))
         bitstrings (apply combo/cartesian-product (repeat num-of-cells [0 1]))
@@ -110,16 +111,40 @@
                                                       (range height))))
         cells2vals (zipmap (reverse cells)
                            (iterate (partial * 2) 1)) ;powers of 2
-        elementarymaps (into {} (map (fn [bits]
-                                       [(bin2dec bits)
-                                        (reduce +
-                                                (map cells2vals
-                                                     (step-fn (selector cells bits))))])
-                                     bitstrings))]
-    (mapv elementarymaps (range num-of-states))))
+        ;;creates a hash-map of state -> updated state entries
+        mappings-fn (fn [step-fn]
+                      (into {}
+                            (map (fn [bits]
+                                   [(bin2dec bits)
+                                    (reduce
+                                     +
+                                     (map cells2vals
+                                          (step-fn (selector cells bits))))])
+                                 bitstrings)))
+        trans-fn (fn [mappings]
+                   (mapv mappings (range num-of-states)))
+        steppers (into [(gol-toroidal-step-fn width height)]
+                       (concat (map set-cell-fn cells)
+                               ;(map erase-cell-fn cells)
+                               ))]
+    (mapv (comp trans-fn mappings-fn) steppers)))
 
 ;;example
-(print (gol-transformation 1 1 (gol-toroidal-step-fn 1 1)))
-(print (gol-transformation 4 4 (gol-toroidal-step-fn 4 4)))
-(print (gol-transformation 2 3 (gol-finite-step-fn 2 3)))
-(print (gol-transformation 2 3 (set-cell-fn [1 2])))
+(gol-transformations 2 2)
+
+
+(defn GapTransformation
+  "Converting a plain 0-indexed transformation vector to GAP commands."
+  [t]
+  (str "Transformation(["
+       (string/join "," (map inc t))
+       "])"))
+
+(defn GapTransformations
+  "Converting transformation to GAP generator set."
+  [ts]
+  (str "["
+       (string/join "," (map GapTransformation ts))
+       "];"))
+
+(GapTransformations (gol-transformations 2 3))
